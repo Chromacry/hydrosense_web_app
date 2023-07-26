@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NodeProps } from "../../../types/CommonType";
 import { Link } from "react-router-dom";
-import { darkGray, lightGray } from "../../../constants/DesignConstant";
+import { darkGray, lightBlueAccent, lightGray, lightPurpleAccent, primaryColor, violetAccent } from "../../../constants/DesignConstant";
 
 export const Nav = styled.div<NodeProps>`
   // background-color: dodgerblue;
@@ -21,28 +21,33 @@ export const Nav = styled.div<NodeProps>`
   }
 `;
 
-export const NavbarContainer = styled.div`
-  width: 25%;
-  height: 100vh; 
+export const NavbarContainer = styled.div<NodeProps>`
+  width: 100%;
+  height: 100%; 
   display: flex;
+  flex-direction: row;
   
   //* SideNav
   .rs-sidenav {
-    background-color: ${darkGray};
+    background-color: ${primaryColor};
   }
   //* Header Color
   .rs-sidenav-header {
-    background-color: ${darkGray};
+    background-color: ${primaryColor};
     color: #fff; !important;
+  }
+  //* SideNav expanded
+  .rs-sidenav-collapse-in {
+    width: 25%;
   }
   //* Botom body of menu items color
   .rs-sidenav-body {
-    background-color: ${darkGray};
+    background-color: ${primaryColor};
     color: #fff; !important;
   }
   //* Toggle button collapse
   .rs-sidenav-toggle-button {
-    background-color: ${darkGray};
+    background-color: ${primaryColor};
     color: #fff;
   }
   .rs-sidenav-toggle-button:hover {
@@ -51,26 +56,26 @@ export const NavbarContainer = styled.div`
   }
   //* Item sub menu color
   .rs-dropdown-item {
-    background-color: ${darkGray};
+    background-color: ${primaryColor};
     color: #fff; !important;
   }
   //* Main menu Item clicked
   .rs-sidenav-default.rs-sidenav-collapse-in .rs-dropdown-menu>.rs-dropdown-item.rs-dropdown-item-active, .rs-sidenav-default.rs-sidenav-collapse-in .rs-sidenav-item.rs-sidenav-item-active, .rs-sidenav-default.rs-sidenav-collapsing .rs-dropdown-menu>.rs-dropdown-item.rs-dropdown-item-active, .rs-sidenav-default.rs-sidenav-collapsing .rs-sidenav-item.rs-sidenav-item-active {
-    color: #000; !important;
+    color: ${lightBlueAccent}; !important;
   }
   //* Main menu item
   .rs-sidenav-default .rs-dropdown-toggle, .rs-sidenav-default .rs-sidenav-item {
-    background-color: ${darkGray};
+    background-color: ${primaryColor};
     color: #fff; !important;
   }
   //* Main Menu item hover
-  .rs-sidenav-default .rs-dropdown-toggle, .rs-sidenav-default .rs-sidenav-item:hover {
-    // background-color: ${darkGray};
+  .rs-sidenav-default .rs-sidenav-item:hover {
+    background-color: ${violetAccent};
     color: #fff; !important;
   }
   //* main sub menu item icon
   .rs-sidenav-item-icon .rs-icon {
-    color: #000 !important;
+    color: #fff !important;
   }
   //* main sub menu item text color
   .rs-sidenav-default .rs-dropdown-toggle {
@@ -78,16 +83,16 @@ export const NavbarContainer = styled.div`
   }
   //* sub menu item clicked
   .rs-dropdown-item-active {
-    color: #000 !important;
+    color: ${lightBlueAccent} !important;
   }
 `;
 
 export const Logo = styled.div`
-  width: 55px;
-  height: 55px;
-  border-radius: 10px;
+  width: 100%;
   overflow: hidden;
   margin: 0 auto;
+  // border-radius: 10px;
+  // padding: 5px;
   margin-top: 15px;
 `;
 

@@ -1,7 +1,9 @@
 export interface UserInfo {
-  id: number;
+  id: string;
   name: string;
   token: string;
+  email: string;
+  roleId: string;
 }
 
 export type UserAuthType = {
@@ -14,7 +16,9 @@ export type UserAuthType = {
 };
 
 export const DefaultUserInfo: UserInfo = {
-  id: 0,
+  id: "",
   name: "",
   token: "",
+  email: "",
+  roleId: "",
 };

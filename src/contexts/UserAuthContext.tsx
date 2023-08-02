@@ -5,7 +5,12 @@ import { UserAuthType, UserInfo, DefaultUserInfo } from "../types/UserAuth";
 export const UserAuthContext = createContext<UserAuthType | null>(null);
 
 const UserAuthProvider: FC<NodeProps> = ({ children }) => {
-  const [userInfo, setUserInfo] = useState<UserInfo>(DefaultUserInfo);
+  const getUserInfoFromLocal = () => {
+    const oldUserAuth = JSON.parse(localStorage.getItem("hydrosenseUser") || "{}");
+    return oldUserAuth;
+  }
+  const [userInfo, setUserInfo] = useState<UserInfo>(getUserInfoFromLocal());
+
 
   const getUserInfo = () => {
     return userInfo;
@@ -14,22 +19,25 @@ const UserAuthProvider: FC<NodeProps> = ({ children }) => {
   const saveUserInfo = (userInfo: UserInfo) => {
     setUserInfo(userInfo);
   };
-
-  const handleLogin = (username: string) => {
+  
+  const handleLogin = (loginUserInfo: UserInfo) => {
     saveUserInfo({
-      id: 1,
-      name: username,
-      token: "token",
+      id: loginUserInfo?.id,
+      name: loginUserInfo?.name,
+      token: loginUserInfo?.token,
+      email: loginUserInfo?.email,
+      roleId: loginUserInfo?.roleId,
     });
-    // localStorage.setItem("username", userInfo.name);
+    localStorage.setItem("hydrosenseUser", JSON.stringify(loginUserInfo));
   };
 
   const handleLogout = () => {
     setUserInfo(DefaultUserInfo);
+    localStorage.removeItem("hydrosenseUser");
   };
 
   const isAuth = (): boolean => {
-    if (userInfo.name) {
+    if (userInfo.token) {
       return true;
     }
     return false;

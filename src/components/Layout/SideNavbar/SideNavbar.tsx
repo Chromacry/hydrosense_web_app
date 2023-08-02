@@ -4,7 +4,7 @@ import "rsuite/dist/rsuite.min.css";
 import { Sidenav, Nav } from 'rsuite';
 import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
 import GroupIcon from '@rsuite/icons/legacy/Group';
-
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import GearCircleIcon from '@rsuite/icons/legacy/GearCircle';
 
 import { NodeProps } from "../../../types/CommonType";
@@ -12,16 +12,20 @@ import {
   Logo, Image, NavbarContainer,
 } from "./SideNavbarElements";
 import { useNavigate, useLocation } from "react-router-dom";
+import IconButton from "@mui/material/IconButton/IconButton";
+import Button from "@mui/material/Button/Button";
+import UserAuthContext from "../../../contexts/UserAuthContext";
+import { UserAuthType } from "../../../types/UserAuth";
 
 
 const LogoImg = "HydroSense_logo.png";
 const LogoImgIcon = "HydroSense_icon.png";
-const SideNavbar = ({ children }: NodeProps) => {
+const SideNavbar: React.FC<NodeProps> = ({ children }: NodeProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeKey, setActiveKey] = useState(location.pathname);
   const [expanded, setExpanded] = useState(true);
-  console.log(activeKey, location.pathname)
+  // console.log(activeKey, location.pathname)
   const onSelectionChanged = (valueKey: string) => {
     setActiveKey(valueKey);
     navigate(valueKey);
@@ -45,23 +49,33 @@ const SideNavbar = ({ children }: NodeProps) => {
                 <Nav.Item eventKey="/water-usage" icon={<GroupIcon />}>
                   Water Usage
                 </Nav.Item>
-                <Nav.Menu
+                {/* <Nav.Menu
                   placement="rightStart"
                   eventKey="manage-devices"
                   title="Manage Devices"
                   icon={<GearCircleIcon />}
                 >
-                  <Nav.Item eventKey="4-1" style={{ color: 'b3b3b3' }}>Devices</Nav.Item>
-                  <Nav.Item eventKey="4-1" style={{ color: 'b3b3b3' }}>Device Locations</Nav.Item>
-                </Nav.Menu>
+                  <Nav.Item eventKey="/devices" style={{ color: 'b3b3b3' }}>Devices</Nav.Item>
+                  <Nav.Item eventKey="/device-locations" style={{ color: 'b3b3b3' }}>Device Locations</Nav.Item>
+                </Nav.Menu> */}
                 <Nav.Menu
                   placement="rightStart"
                   eventKey="manage-users"
                   title="Manage Users"
                   icon={<GearCircleIcon />}
                 >
-                  <Nav.Item eventKey="4-1" style={{ color: 'b3b3b3' }}>Users</Nav.Item>
+                  <Nav.Item eventKey="/households" style={{ color: 'b3b3b3' }}>Households</Nav.Item>
+                  <Nav.Item eventKey="/users" style={{ color: 'b3b3b3' }}>Users</Nav.Item>
                 </Nav.Menu>
+                {/* <Nav.Menu
+                  placement="rightStart"
+                  eventKey="configuration"
+                  title="Configuration"
+                  icon={<GearCircleIcon />}
+                >
+                  <Nav.Item eventKey="/households" style={{ color: 'b3b3b3' }}>Households</Nav.Item>
+                  <Nav.Item eventKey="/users" style={{ color: 'b3b3b3' }}>Users</Nav.Item>
+                </Nav.Menu> */}
                 {/* Below for reference if want dropdown */}
                 {/* <Nav.Menu
                 placement="rightStart"
@@ -78,7 +92,16 @@ const SideNavbar = ({ children }: NodeProps) => {
                 </Nav.Menu>
               </Nav.Menu> */}
               </Nav>
+                
+              
             </Sidenav.Body>
+
+            <Button variant="contained" onClick={() => {
+                localStorage.setItem('hydrosenseUser', '{}');
+                window.location.reload();
+              }}>
+                Logout <ExitToAppRoundedIcon />
+              </Button>
             <Sidenav.Toggle expanded={expanded} onToggle={expanded => setExpanded(expanded)} />
           </Sidenav>
         {children}

@@ -6,7 +6,7 @@ import { UserAuthType, UserInfo } from "../../types/UserAuth";
 import { TbUserCircle } from "react-icons/tb";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LoginFormprops, LoginUserValues } from "../../types/LoginUserType";
+import { LoginApiBody, LoginFormprops, LoginUserValues, ResponseLoginApiDataType, ResponseLoginApiType, ResponseLoginData } from "../../types/LoginUserType";
 import { STATUS_CODES } from "../../constants/GlobalConstant";
 
 import {
@@ -26,7 +26,7 @@ import {
     CardWrapperContainer,
     ImageContainer,
 } from "./LoginElements";
-import Layout from "../Layout/Layout";
+import { loginApi } from "../../services/RouteServices/LoginApi";
 
 
 const LogoImg = "hydroSense_logo_nobg.png";
@@ -35,106 +35,108 @@ const LoginImg = "loginIlustration.png";
 const Login: FC = () => {
     const { userInfo, handleLogin } = useContext(UserAuthContext) as UserAuthType;
     const navigate = useNavigate();
-    
+
     const [errorText, setErrorText] = useState("");
     const [successText, setSuccessText] = useState("");
 
-    const loginHandler = async (userEmail : string, password : string) =>{
-        const loginValues : LoginUserValues = {
-            email : userEmail,
-            password : password
+    const loginHandler = async (userEmail: string, password: string) => {
+        const loginValues: LoginApiBody = {
+            emailAddress: userEmail,
+            userPassword: password
         }
-        navigate('/');
-        // await loginApi(loginValues)
-        // .then((res : any) => {
-        //     const resData : ResponseLoginApiType = res;
-        //     const resApiData : ResponseLoginApiDataType = resData?.data;
-        //     if (resApiData.status === STATUS_CODES.SUCCESS_CODE){
-        //     if (resApiData){
-        //         if (resApiData?.status === STATUS_CODES.SUCCESS_CODE){
-        //             const responseData : ResponseLoginData = resApiData?.data;
-        //             const loginUserInfo : UserInfo = {
-        //             id : responseData[0]?.id as number,
-        //             username : responseData[0]?.username,
-        //             email : responseData[0]?.emailaddress,
-        //             token : res.headers.accesstoken,
-        //         }
-        //         handleLogin(loginUserInfo);
-        //         navigate("/", { replace: true });
-        //     }
-        //     else{
-        //         // TODO: Show error message
-        //         setSuccessText("");
-        //         // setErrorText(responseData?.message);
-        //     }
-        //     }
-            
-        // }
-        // else{
-        //     setErrorText(resApiData.message);
-        // }
-        // })
-        // .catch((error) => {
-        //     console.log (error);
-        //     // TODO: Show error message
-        // });
+        await loginApi(loginValues)
+        .then((res : any) => {
+            const resData : ResponseLoginApiType = res;
+            const resApiData : ResponseLoginApiDataType = resData?.data;
+            console.log(resApiData);
+            if (resApiData.status === STATUS_CODES.SUCCESS_CODE){
+            if (resApiData){
+                if (resApiData?.status === STATUS_CODES.SUCCESS_CODE){
+                    const responseData : ResponseLoginData[] = resApiData?.data;
+                    const loginUserInfo : UserInfo = {
+                    id : responseData[0]?.user_id,
+                    name : responseData[0]?.username,
+                    email : responseData[0]?.email_address,
+                    token : responseData[0]?.access_token,
+                    roleId: responseData[0]?.roleId,
+                }
+                setSuccessText(resApiData?.message)
+                handleLogin(loginUserInfo);
+                navigate("/", { replace: true });
+            }
+            else{
+                // TODO: Show error message
+                setSuccessText("");
+                // setErrorText(responseData?.message);
+            }
+            }
+
+        }
+        else{
+            setErrorText(resApiData.message);
+        }
+        })
+        .catch((error) => {
+            console.log (error);
+            // TODO: Show error message
+        });
     }
-    
+
     const InnerForm = (props: FormikProps<LoginUserValues>) => {
         const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-        props;
+            props;
         return (
             <>
-              <Container>
-                <Card>
-                  <CardWrapperContainer>
-                    <ImageContainer>
-                      <Image src={LoginImg} imageSize='100%'/>
-                    </ImageContainer>
-                    <form onSubmit={handleSubmit}>
-                    <CardContainer>
-                    <Image src={LogoImg} alt="logo" />
-                    <Title>Welcome Back!</Title>
-                    <SuccessText>{successText}</SuccessText>
-                    <ErrorText>{errorText}</ErrorText>
-                        <InputTitle>Email</InputTitle>
-                        <InputContainer>
-                            <Icon>
-                                <TbUserCircle size={"25px"} />
-                            </Icon>
-                            <Input
-                                placeholder="Email Address"
-                                // autoFocus
-                                name="email"
-                                value={values.email}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                        </InputContainer>
-                        <InputTitle>Password</InputTitle>
-                        <InputContainer>
-                            <Icon>
-                                <RiLockPasswordLine size={"25px"} />
-                            </Icon>
-                            <Input
-                                type={"password"}
-                                placeholder="Password"
-                                name="password"
-                                value={values.password}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                        </InputContainer>
-                        <ForgetContainer>
-                            <Link to="/forgetpassword" className="forgetpw-text">forget password?</Link>
-                        </ForgetContainer>
-                        <Button type="submit">Login</Button>
-                  </CardContainer>
-                  </form>
-                </CardWrapperContainer>
-              </Card>
-            </Container>
-          </>
+                <Container>
+                    <Card>
+                        <CardWrapperContainer>
+                            <ImageContainer>
+                                <Image src={LoginImg} imageSize='100%' />
+                            </ImageContainer>
+                            <form onSubmit={handleSubmit}>
+                                <CardContainer>
+                                    <Image src={LogoImg} alt="logo" />
+                                    <Title>Welcome Back!</Title>
+                                    <SuccessText>{successText}</SuccessText>
+                                    <ErrorText>{errorText}</ErrorText>
+                                    <InputTitle>Email</InputTitle>
+                                    <InputContainer>
+                                        <Icon>
+                                            <TbUserCircle size={"25px"} />
+                                        </Icon>
+                                        <Input
+                                            placeholder="Email Address"
+                                            // autoFocus
+                                            name="email"
+                                            value={values?.email}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                    </InputContainer>
+                                    <InputTitle>Password</InputTitle>
+                                    <InputContainer>
+                                        <Icon>
+                                            <RiLockPasswordLine size={"25px"} />
+                                        </Icon>
+                                        <Input
+                                            type={"password"}
+                                            placeholder="Password"
+                                            name="password"
+                                            value={values?.password}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                    </InputContainer>
+                                    <ForgetContainer>
+                                        <Link to="/forgetpassword" className="forgetpw-text">forget password?</Link>
+                                    </ForgetContainer>
+                                    <Button type="submit">Login</Button>
+                                </CardContainer>
+                            </form>
+                        </CardWrapperContainer>
+                    </Card>
+                </Container>
+            </>
         );
     };
 
@@ -152,9 +154,9 @@ const Login: FC = () => {
         },
     })(InnerForm);
 
-    return(
+    return (
         <>
-        <LoginForm />
+            <LoginForm />
         </>
     );
 }

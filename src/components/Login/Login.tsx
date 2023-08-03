@@ -27,7 +27,8 @@ import {
     ImageContainer,
 } from "./LoginElements";
 import { loginApi } from "../../services/RouteServices/LoginApi";
-
+import Backdrop from "@mui/material/Backdrop/Backdrop";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const LogoImg = "HydroSense_logo_nobg.png";
 const LoginImg = "loginIlustration.png";
@@ -35,6 +36,8 @@ const LoginImg = "loginIlustration.png";
 const Login: FC = () => {
     const { userInfo, handleLogin } = useContext(UserAuthContext) as UserAuthType;
     const navigate = useNavigate();
+
+    const [open, setOpen] = useState(false);
 
     const [errorText, setErrorText] = useState("");
     const [successText, setSuccessText] = useState("");
@@ -44,6 +47,7 @@ const Login: FC = () => {
             emailAddress: userEmail,
             userPassword: password
         }
+        setOpen(true);
         await loginApi(loginValues)
         .then((res : any) => {
             const resData : ResponseLoginApiType = res;
@@ -62,12 +66,14 @@ const Login: FC = () => {
                 }
                 setSuccessText(resApiData?.message)
                 handleLogin(loginUserInfo);
+                setOpen(false);
                 navigate("/dashboard", { replace: true });
             }
             else{
                 // TODO: Show error message
+                setOpen(false);
                 setSuccessText("");
-                // setErrorText(responseData?.message);
+                setErrorText(resApiData?.message);
             }
             }
 
@@ -135,6 +141,13 @@ const Login: FC = () => {
                             </form>
                         </CardWrapperContainer>
                     </Card>
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={open}
+                        // onClick={handleClose}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                 </Container>
             </>
         );

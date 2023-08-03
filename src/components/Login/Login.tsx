@@ -80,6 +80,7 @@ const Login: FC = () => {
         }
         else{
             setErrorText(resApiData.message);
+            setOpen(false);
         }
         })
         .catch((error) => {

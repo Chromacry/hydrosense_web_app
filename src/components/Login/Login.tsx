@@ -62,7 +62,7 @@ const Login: FC = () => {
                 }
                 setSuccessText(resApiData?.message)
                 handleLogin(loginUserInfo);
-                navigate("/", { replace: true });
+                navigate("/dashboard", { replace: true });
             }
             else{
                 // TODO: Show error message

@@ -43,7 +43,7 @@ const SideNavbar: React.FC<NodeProps> = ({ children }: NodeProps) => {
             </Sidenav.Header>
             <Sidenav.Body >
               <Nav activeKey={activeKey} onSelect={onSelectionChanged}>
-                <Nav.Item eventKey="/" icon={<DashboardIcon />}>
+                <Nav.Item eventKey="/dashboard" icon={<DashboardIcon />}>
                   Dashboard
                 </Nav.Item>
                 <Nav.Item eventKey="/water-usage" icon={<GroupIcon />}>

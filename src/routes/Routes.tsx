@@ -14,7 +14,7 @@ function Routes() {
         <Router>
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/water-usage" element={<WaterUsage />} />
             <Route path="/users" element={<Users />} />
             <Route path="/households" element={<Households />} />

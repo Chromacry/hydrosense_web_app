@@ -29,7 +29,7 @@ import {
 import { loginApi } from "../../services/RouteServices/LoginApi";
 
 
-const LogoImg = "hydroSense_logo_nobg.png";
+const LogoImg = "HydroSense_logo_nobg.png";
 const LoginImg = "loginIlustration.png";
 
 const Login: FC = () => {

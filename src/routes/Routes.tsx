@@ -7,7 +7,7 @@ import Users from "../components/Users/Users";
 import Households from "../components/Households/Households";
 
 function Routes() {
-  
+  // Web routes
   return (
     <>
       <BrowserRouter>

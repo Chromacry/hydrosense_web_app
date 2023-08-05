@@ -64,8 +64,9 @@ const SideNavbar: React.FC<NodeProps> = ({ children }: NodeProps) => {
                   title="Manage Users"
                   icon={<GearCircleIcon />}
                 >
-                  <Nav.Item eventKey="/households" style={{ color: 'b3b3b3' }}>Households</Nav.Item>
                   <Nav.Item eventKey="/users" style={{ color: 'b3b3b3' }}>Users</Nav.Item>
+                  <Nav.Item eventKey="/roles" style={{ color: 'b3b3b3' }}>Roles</Nav.Item>
+                  <Nav.Item eventKey="/households" style={{ color: 'b3b3b3' }}>Households</Nav.Item>
                 </Nav.Menu>
                 {/* <Nav.Menu
                   placement="rightStart"

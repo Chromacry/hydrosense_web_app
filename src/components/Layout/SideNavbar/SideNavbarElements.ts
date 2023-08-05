@@ -83,7 +83,13 @@ export const NavbarContainer = styled.div<NodeProps>`
   }
   //* sub menu item clicked
   .rs-dropdown-item-active {
+    background-color: ${violetAccent};
     color: ${lightBlueAccent} !important;
+  }
+  //* sub menu item hovver
+  .rs-dropdown-item:hover {
+    background-color: ${violetAccent};
+    color: #fff !important;
   }
 `;
 

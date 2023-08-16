@@ -13,8 +13,8 @@ import {
 
 import { STATUS_CODES } from "../../constants/GlobalConstant";
 import { EnhancedTable } from "./TableData";
-import { addUserDataApi, deleteUserDataApi, editUserDataApi, getAllUsersDataApi } from "../../services/RouteServices/UsersApi";
-import { ResponseUsersData } from "../../types/UsersType";
+import { addUserDataApi, deleteUserDataApi, editUserDataApi, getAllUsersDataApi } from "../../services/RouteServices/UserApi";
+import { ResponseUsersData } from "../../types/UserType";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { TextField } from "@mui/material";
@@ -24,10 +24,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import Alert from '@mui/material/Alert';
 import { getAllHouseholdsDataApi } from "../../services/RouteServices/HouseholdApi";
-import { ResponseHouseholdsApiDataType, ResponseHouseholdsApiType, ResponseHouseholdsData } from "../../types/HouseholdsType";
+import { ResponseHouseholdsApiDataType, ResponseHouseholdsApiType, ResponseHouseholdsData } from "../../types/HouseholdType";
 import { getCurrentUserFromLocalStorage } from "../../utils/LocalStorageUtil";
-import { ResponseRolesApiDataType, ResponseRolesApiType, ResponseRolesData } from "../../types/RolesType";
-import { getAllRolesDataApi } from "../../services/RouteServices/RolesApi";
+import { ResponseRolesApiDataType, ResponseRolesApiType, ResponseRolesData } from "../../types/RoleType";
+import { getAllRolesDataApi } from "../../services/RouteServices/RoleApi";
 // import { UserData } from "../../types/TableDataType";
 
 const Users: FC = () => {
@@ -197,6 +197,7 @@ const Users: FC = () => {
       userName: editusernameFormValue,
       emailAddress: editemailAddressFormValue,
       phoneNumber: editphoneNumberFormValue,
+      userStatus: edituserStatusFormValue,
       updatedBy: currentUser?.name
     }
     await editUserDataApi(body)

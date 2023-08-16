@@ -49,7 +49,7 @@ const SideNavbar: React.FC<NodeProps> = ({ children }: NodeProps) => {
                 <Nav.Item eventKey="/water-usage" icon={<GroupIcon />}>
                   Water Usage
                 </Nav.Item>
-                {/* <Nav.Menu
+                <Nav.Menu
                   placement="rightStart"
                   eventKey="manage-devices"
                   title="Manage Devices"
@@ -57,7 +57,7 @@ const SideNavbar: React.FC<NodeProps> = ({ children }: NodeProps) => {
                 >
                   <Nav.Item eventKey="/devices" style={{ color: 'b3b3b3' }}>Devices</Nav.Item>
                   <Nav.Item eventKey="/device-locations" style={{ color: 'b3b3b3' }}>Device Locations</Nav.Item>
-                </Nav.Menu> */}
+                </Nav.Menu>
                 <Nav.Menu
                   placement="rightStart"
                   eventKey="manage-users"

@@ -17,12 +17,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import { visuallyHidden } from '@mui/utils';
-import { HouseholdsTableDataProps } from '../../types/TableDataType';
+import { RolesTableDataProps } from '../../types/TableDataType';
 import { convertToReadableDateTime } from '../../utils/DateTimeUtil';
 import Delete from '@mui/icons-material/Delete';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import Button from '@mui/material/Button/Button';
-import { ResponseHouseholdsData } from '../../types/HouseholdType';
+import { ResponseRolesData } from '../../types/RoleType';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -66,35 +66,23 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof ResponseHouseholdsData  | any;
+  id: keyof ResponseRolesData;
   label: string;
   numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'household_id',
+    id: 'role_id',
     numeric: false,
     disablePadding: false,
-    label: 'Household ID',
+    label: 'Role ID',
   },
   {
-    id: 'household_name',
+    id: 'role_name',
     numeric: true,
     disablePadding: false,
-    label: 'Household Name',
-  },
-  {
-    id: 'household_address',
-    numeric: true,
-    disablePadding: false,
-    label: 'Address',
-  },
-  {
-    id: 'household_postalcode',
-    numeric: true,
-    disablePadding: false,
-    label: 'Postal Code',
+    label: 'Role Name',
   },
   {
     id: 'created_at',
@@ -112,16 +100,16 @@ const headCells: readonly HeadCell[] = [
 
 interface EnhancedTableProps {
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof ResponseHouseholdsData) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof ResponseRolesData) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
   rowCount: number;
 }
 
-export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, addOnClick, editOnClick, deleteOnClick }) => {
+export const EnhancedTable: React.FC<RolesTableDataProps> = ({ tableRows, addOnClick, editOnClick, deleteOnClick }) => {
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof ResponseHouseholdsData>('created_at');
+  const [orderBy, setOrderBy] = React.useState<keyof ResponseRolesData>('created_at');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -131,7 +119,7 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
       props;
     const createSortHandler =
-      (property: keyof ResponseHouseholdsData) => (event: React.MouseEvent<unknown>) => {
+      (property: keyof ResponseRolesData) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
       };
   
@@ -209,10 +197,10 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
             id="tableTitle"
             component="div"
           >
-            Households
+            Roles
           </Typography>
         )}
-        <Tooltip title="Add User">
+        <Tooltip title="Add Role">
           <Button onClick={addOnClick} variant="contained">Add</Button>
           </Tooltip>
       </Toolbar>
@@ -221,7 +209,7 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
   
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof ResponseHouseholdsData,
+    property: keyof ResponseRolesData,
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -230,7 +218,7 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = tableRows.map((n) => n.household_id);
+      const newSelected = tableRows.map((n) => n.role_id);
       setSelected(newSelected);
       return;
     }
@@ -301,7 +289,7 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.household_id);
+                const isItemSelected = isSelected(row.role_id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
@@ -311,7 +299,7 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
                     // role="checkbox"
                     // aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.household_id}
+                    key={row.role_id}
                     // selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -330,17 +318,15 @@ export const EnhancedTable: React.FC<HouseholdsTableDataProps> = ({ tableRows, a
                       scope="row"
                       padding="normal"
                     >
-                      {row.household_id}
+                      {row.role_id}
                     </TableCell>
-                    <TableCell align="right">{row.household_name}</TableCell>
-                    <TableCell align="right">{row.household_address}</TableCell>
-                    <TableCell align="right">{row.household_postalcode}</TableCell>
+                    <TableCell align="right">{row.role_name}</TableCell>
                     <TableCell align="right">{convertToReadableDateTime(row.created_at)}</TableCell>
                     <TableCell align="left">
                       <IconButton onClick={() => editOnClick(row)}>
                         <EditRoundedIcon />
                       </IconButton>
-                      <IconButton onClick={() => deleteOnClick(row.household_id)}>
+                      <IconButton onClick={() => deleteOnClick(row.role_id)}>
                         <Delete />
                       </IconButton>
                     </TableCell>

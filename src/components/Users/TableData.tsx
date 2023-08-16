@@ -20,7 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { UsersTableDataProps } from '../../types/TableDataType';
-import { ResponseUsersData } from '../../types/UsersType';
+import { ResponseUsersData } from '../../types/UserType';
 import { convertToReadableDateTime } from '../../utils/DateTimeUtil';
 import Delete from '@mui/icons-material/Delete';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';

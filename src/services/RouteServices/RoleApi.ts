@@ -7,3 +7,11 @@ export const getAllRolesDataApi = async (inputData : any) => {
 export const addRoleDataApi = async (inputData : any) => {
     return await http.post("/role", inputData)
 }
+
+export const editRoleDataApi = async (inputData : any) => {
+    return await http.put("/role", inputData)
+}
+
+export const deleteRoleDataApi = async (inputData : any) => {
+    return await http.delete("/role", inputData)
+}

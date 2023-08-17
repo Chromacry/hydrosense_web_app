@@ -6,7 +6,7 @@ import Dashboard from "../components/Dashboard/Dashboard";
 import Users from "../components/Users/Users";
 import Households from "../components/Households/Households";
 import Roles from "../components/Roles/Roles";
-import Devices from "../components/Devices/Devices";
+// import Devices from "../components/Devices/Devices";
 
 function Routes() {
   // Web routes
@@ -22,8 +22,8 @@ function Routes() {
             <Route path="/users" element={<Users />} />
             <Route path="/households" element={<Households />} />
             <Route path="/roles" element={<Roles />} />
-            <Route path="/devices" element={<Devices />} />
-            <Route path="/devicelocations" element={<Devices />} />
+            {/* <Route path="/devices" element={<Devices />} /> */}
+            {/* <Route path="/devicelocations" element={<Devices />} /> */}
           </Route>
         </Router>
       </BrowserRouter>
